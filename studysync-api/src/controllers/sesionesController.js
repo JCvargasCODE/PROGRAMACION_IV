@@ -1,3 +1,5 @@
+// AGREGAR al inicio del archivo (después de la primera línea):
+const { pub } = require('../redis/client');
 let sesiones = [];
 let nextId = 1;
 // ── GET /api/sesiones
@@ -13,26 +15,31 @@ const obtenerUna = async (req, res) => {
 };
 // ── POST /api/sesiones
 const crear = async (req, res) => {
-  const { titulo, descripcion, fechaHora, materia } = req.body;
-  if (!titulo || titulo.trim() === '') {
-    return res.status(400).json({
-      error: 'El campo titulo es obligatorio',
-      campos_requeridos: ['titulo'],
-      campos_opcionales: ['descripcion', 'fechaHora', 'materia']
-    });
-  }
-  const nuevaSesion = {
-    id: nextId++,
-    titulo: titulo.trim(),
-    descripcion: descripcion || '',
-    materia: materia || 'General',
-    fechaHora: fechaHora || new Date().toISOString(),
-    completada: false,
-    creadaEn: new Date().toISOString()
-  };
-  sesiones.push(nuevaSesion);
-  res.status(201).json(nuevaSesion);
+const { titulo, descripcion, fechaHora, materia } = req.body;
+if (!titulo || titulo.trim() === '') {
+return res.status(400).json({ error: 'El campo titulo es obligatorio' });
+}
+const nuevaSesion = {
+id: nextId++,
+titulo: titulo.trim(),
+descripcion: descripcion || '',
+materia: materia || 'General',
+fechaHora: fechaHora || new Date().toISOString(),
+completada: false,
+creadaEn: new Date().toISOString()
 };
+sesiones.push(nuevaSesion);
+// ✨ NUEVO: publicar evento en Redis DESPUÉS de guardar la sesión
+// pub.publish(canal, mensaje_como_string_json)
+await pub.publish('study:sesion:creada', JSON.stringify({
+tipo: 'sesion:creada',
+payload: nuevaSesion,
+timestamp: new Date().toISOString()
+}));
+console.log('[Redis] Evento publicado: sesion:creada →', nuevaSesion.titulo);
+res.status(201).json(nuevaSesion);
+};
+
 // ── PUT /api/sesiones/:id
 const actualizar = async (req, res) => {
   const id = parseInt(req.params.id);
