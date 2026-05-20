@@ -1,2 +1,38 @@
-//ACTIVIDAD_0 
-//ACTIVIDAD_1
+
+//--------endpoints
+//1. GET — Lista vacía
+//GET https://studysync-api-7n8v.onrender.com/api/sesiones
+// {"ok":true,"total":0,"datos":[]}
+
+//2. POST — Crear sesión
+//POST https://studysync-api-7n8v.onrender.com/api/sesiones
+//Body JSON:
+//json{"titulo":"Prog IV","materia":"Sistemas"}
+//Espera: status 201 con el objeto creado con id:1
+
+//3. GET — Ver la sesión creada
+//GET https://studysync-api-7n8v.onrender.com/api/sesiones/1
+//el objeto con id:1
+
+//4. PUT — Marcar como completada
+//PUT https://studysync-api-7n8v.onrender.com/api/sesiones/1
+//Body JSON:
+//json{"completada":true}
+//Espera: status 200 con "completada":true
+
+//5. GET — ID que no existe
+//GET https://studysync-api-7n8v.onrender.com/api/sesiones/999
+//Sin body. Espera: status 404 con "error":"Sesión 999 no encontrada"
+
+//6. DELETE — Eliminar sesión
+//DELETE https://studysync-api-7n8v.onrender.com/api/sesiones/1
+//Sin body. Espera: status 200 con "ok":true
+
+//7. POST — Sin título (validación)
+//POST https://studysync-api-7n8v.onrender.com/api/sesiones
+//Body JSON:
+//json{"materia":"Prog IV"}
+//Espera: status 400 con "error":"El campo titulo es obligatorio"
+
+//URL DE API EN INTERNET
+//https://api-usuarios-x9t4.onrender.com

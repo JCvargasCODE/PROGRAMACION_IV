@@ -1,17 +1,17 @@
 let sesiones = [];
 let nextId = 1;
-
+// ── GET /api/sesiones
 const listar = async (req, res) => {
   res.json({ ok: true, total: sesiones.length, datos: sesiones });
 };
-
+// ── GET /api/sesiones/:id
 const obtenerUna = async (req, res) => {
   const id = parseInt(req.params.id);
   const sesion = sesiones.find(s => s.id === id);
   if (!sesion) return res.status(404).json({ error: `Sesión ${id} no encontrada` });
   res.json(sesion);
 };
-
+// ── POST /api/sesiones
 const crear = async (req, res) => {
   const { titulo, descripcion, fechaHora, materia } = req.body;
   if (!titulo || titulo.trim() === '') {
@@ -33,7 +33,7 @@ const crear = async (req, res) => {
   sesiones.push(nuevaSesion);
   res.status(201).json(nuevaSesion);
 };
-
+// ── PUT /api/sesiones/:id
 const actualizar = async (req, res) => {
   const id = parseInt(req.params.id);
   const indice = sesiones.findIndex(s => s.id === id);
@@ -46,7 +46,7 @@ const actualizar = async (req, res) => {
   };
   res.json(sesiones[indice]);
 };
-
+// ── DELETE /api/sesiones/:id
 const eliminar = async (req, res) => {
   const id = parseInt(req.params.id);
   const longitudAnterior = sesiones.length;
