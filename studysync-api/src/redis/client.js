@@ -27,3 +27,4 @@ const sub = new Redis(REDIS_URL, opciones);
 sub.on('connect', () => console.log('✓ Redis Sub: conectado a Upstash'));
 sub.on('error', (e) => console.error('✗ Redis Sub error:', e.message));
 module.exports = { pub, sub };
+    

@@ -1,4 +1,5 @@
 require('dotenv').config();
+//const { pub, sub } = require('./redis/client');
 const express = require('express');
 const app = express();
 
@@ -11,6 +12,9 @@ app.use((req, res, next) => {
   console.log(`[${timestamp}] ${req.method} ${req.path}`);
   next();
 });
+
+// express.static('public') sirve todos los archivos de la carpeta public/
+app.use(express.static('public'));
 
 // Ruta raíz
 app.get('/', (req, res) => {

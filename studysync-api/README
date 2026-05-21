@@ -1,38 +1,105 @@
+StudySync API
 
-//--------endpoints
-//1. GET — Lista vacía
-//GET https://studysync-api-7n8v.onrender.com/api/sesiones
-// {"ok":true,"total":0,"datos":[]}
+API REST desarrollada con Node.js y Express para la gestión de sesiones de estudio en tiempo real.
 
-//2. POST — Crear sesión
-//POST https://studysync-api-7n8v.onrender.com/api/sesiones
-//Body JSON:
-//json{"titulo":"Prog IV","materia":"Sistemas"}
-//Espera: status 201 con el objeto creado con id:1
+Tecnologías utilizadas
+Node.js
+Express.js
+Redis (Upstash)
+Socket.io
+Git & GitHub
+Render
+Thunder Client
+dotenv
+ioredis
+Descripción del proyecto
 
-//3. GET — Ver la sesión creada
-//GET https://studysync-api-7n8v.onrender.com/api/sesiones/1
-//el objeto con id:1
+StudySync es una plataforma backend que permite crear y administrar sesiones de estudio mediante una API REST.
 
-//4. PUT — Marcar como completada
-//PUT https://studysync-api-7n8v.onrender.com/api/sesiones/1
-//Body JSON:
-//json{"completada":true}
-//Espera: status 200 con "completada":true
+El sistema implementa:
 
-//5. GET — ID que no existe
-//GET https://studysync-api-7n8v.onrender.com/api/sesiones/999
-//Sin body. Espera: status 404 con "error":"Sesión 999 no encontrada"
+CRUD completo
+Arquitectura MVC
+Variables de entorno
+Comunicación en tiempo real
+Redis Pub/Sub
+WebSockets con Socket.io
+Deploy en la nube con Render
+Estructura del proyecto
+src/
+ ├── controllers/
+ ├── routes/
+ ├── middlewares/
+ ├── redis/
+ ├── subscribers/
+ ├── swagger/
+ ├── app.js
+ └── server.js
+Instalación
+1. Clonar repositorio
+git clone https://github.com/TUUSUARIO/studysync-api.git
+2. Entrar al proyecto
+cd studysync-api
+3. Instalar dependencias
+npm install
+4. Ejecutar servidor
+npm run dev
+🌐 URL de producción
+https://TU-URL-RENDER.onrender.com
+Endpoints disponibles
+GET - Obtener todas las sesiones
+GET /api/sesiones
+GET - Obtener una sesión por ID
+GET /api/sesiones/:id
+POST - Crear sesión
+POST /api/sesiones
+Body JSON
+{
+  "titulo": "Redis Pub/Sub",
+  "materia": "Programación IV"
+}
+PUT - Actualizar sesión
+PUT /api/sesiones/:id
+Body JSON
+{
+  "completada": true
+}
+DELETE - Eliminar sesión
+DELETE /api/sesiones/:id
+Tiempo Real
 
-//6. DELETE — Eliminar sesión
-//DELETE https://studysync-api-7n8v.onrender.com/api/sesiones/1
-//Sin body. Espera: status 200 con "ok":true
+El sistema utiliza Redis Pub/Sub y Socket.io para enviar eventos en tiempo real a los clientes conectados.
 
-//7. POST — Sin título (validación)
-//POST https://studysync-api-7n8v.onrender.com/api/sesiones
-//Body JSON:
-//json{"materia":"Prog IV"}
-//Espera: status 400 con "error":"El campo titulo es obligatorio"
+Cuando una nueva sesión es creada:
 
-//URL DE API EN INTERNET
-//https://api-usuarios-x9t4.onrender.com
+La API publica un evento en Redis
+El suscriptor escucha el evento
+Socket.io retransmite el evento al navegador
+Los clientes reciben la actualización automáticamente
+Pruebas
+
+Los endpoints fueron probados con Thunder Client.
+
+Códigos HTTP utilizados:
+
+200 OK
+201 Created
+400 Bad Request
+404 Not Found
+Autor
+
+Juan Carlos Vargas Avendaño
+Programación IV — UPDS 2026
+
+✅Estado del proyecto
+
+✔ API REST funcional
+✔ CRUD completo
+✔ MVC implementado
+✔ Redis configurado
+✔ Socket.io funcionando
+✔ Deploy realizado en Render
+✔ GitHub público
+✔ Variables de entorno configuradas
+
+
