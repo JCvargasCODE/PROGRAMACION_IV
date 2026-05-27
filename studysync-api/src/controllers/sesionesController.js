@@ -32,11 +32,34 @@ sesiones.push(nuevaSesion);
 // ✨ NUEVO: publicar evento en Redis DESPUÉS de guardar la sesión
 // pub.publish(canal, mensaje_como_string_json)
 await pub.publish('study:sesion:creada', JSON.stringify({
-tipo: 'sesion:creada',
-payload: nuevaSesion,
-timestamp: new Date().toISOString()
+  tipo: 'sesion:creada',
+  payload: nuevaSesion,
+  timestamp: new Date().toISOString(),
+  version: '1.0'
 }));
-console.log('[Redis] Evento publicado: sesion:creada →', nuevaSesion.titulo);
+
+await pub.publish('study:usuario:unido', JSON.stringify({
+  tipo: 'usuario:unido',
+  payload: {
+    usuario: nuevaSesion.titulo,
+    grupo: nuevaSesion.materia
+  },
+  timestamp: new Date().toISOString(),
+  version: '1.0'
+}));
+
+await pub.publish('study:material:publicado', JSON.stringify({
+  tipo: 'material:publicado',
+  payload: {
+    materia: nuevaSesion.materia,
+    titulo: nuevaSesion.titulo,
+    autor: 'StudySync'
+  },
+  timestamp: new Date().toISOString(),
+  version: '1.0'
+}));
+
+console.log('[Redis] 3 eventos publicados →', nuevaSesion.titulo);
 res.status(201).json(nuevaSesion);
 };
 
