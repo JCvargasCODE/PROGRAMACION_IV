@@ -1,5 +1,5 @@
 require('dotenv').config();
-//const { pub, sub } = require('./redis/client');
+const { pub, sub } = require('./redis/client');
 const express = require('express');
 const app = express();
 

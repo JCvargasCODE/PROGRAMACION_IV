@@ -32,8 +32,7 @@ animation: aparecer 0.3s ease;
 // Conectar al servidor Socket.io automáticamente
 const socket = io();
 socket.on('connect', () => {
-document.getElementById('status').textContent = '🟢 Conectado al servidor en tiempo
-real';
+document.getElementById('status').textContent = '🟢 Conectado al servidor en tiemporeal';
 document.getElementById('status').className = 'conectado';
 });
 socket.on('disconnect', () => {
