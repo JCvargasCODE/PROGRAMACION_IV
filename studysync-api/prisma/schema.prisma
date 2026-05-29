@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Tabla de usuarios
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  email     String   @unique
+  password  String
+  creadoEn  DateTime @default(now())
+  sesiones  Sesion[]
+}
+
+// Tabla de sesiones
+model Sesion {
+  id            Int      @id @default(autoincrement())
+  titulo        String
+  descripcion   String?
+  materia       String   @default("General")
+  fechaHora     DateTime @default(now())
+  completada    Boolean  @default(false)
+  creadaEn      DateTime @default(now())
+  actualizadaEn DateTime @updatedAt
+  usuarioId     Int
+  usuario       Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+}
