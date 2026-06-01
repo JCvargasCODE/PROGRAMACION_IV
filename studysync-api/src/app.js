@@ -16,10 +16,11 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "https:", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "ws:", "wss:"]
+      connectSrc: ["'self'", "ws:", "wss:", "http://localhost:3000", "https://studysync-api-7n8v.onrender.com"]
     }
   }
 }));
+
 // 2. CORS: controla qué dominios pueden llamar a la API
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
