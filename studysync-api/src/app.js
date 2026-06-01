@@ -9,8 +9,17 @@ const rateLimit   = require('express-rate-limit');
 const helmet      = require('helmet');
 
 // 1. Helmet: cabeceras HTTP de seguridad automáticas
-app.use(helmet());
-
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", "ws:", "wss:"]
+    }
+  }
+}));
 // 2. CORS: controla qué dominios pueden llamar a la API
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
